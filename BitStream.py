@@ -1,29 +1,19 @@
 class BitStream:
+    def __init__(self):
+        self.bit_array = None
 
     def read_file(self, filename):
         file = open(filename, 'rb')
-        while True:
-            var = file.read(1)
-            if len(var) == 0:
-                break
-            bits = format(ord(var.decode()), 'b')
-            nbits = len(bits)
+        fcontent = file.read()
+        self.bit_array = ''.join(format(ord(byte), '08b') for byte in str(fcontent))
+        print(self.bit_array)
 
-            if nbits < 8:
-                for i in range(0,8-nbits):
-                    bits = '0' + bits
-            print(bits)
+        #print(len(self.bit_array))
+
         file.close()
 
-    def return_bit_pos(self, filename, pos):
-        file = open(filename, 'rb')
-
-        byte = file.read(1)
-
-        bits = format(ord(byte.decode('ascii')),'b')
-
-        print(bits[pos])
-        file.close()
+    def read_n_bits(self, num):
+        pass
 
     def write_file(self, filename):
         file = open(filename, 'wb')
@@ -38,5 +28,4 @@ if __name__ == '__main__':
 
     bs = BitStream()
     bs.write_file('test_b')
-    bs.read_file('metade.pbm')
-    bs.return_bit_pos('test_b', 2)
+    bs.read_file('test_b')
