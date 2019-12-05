@@ -1,3 +1,4 @@
+
 import os
 
 class BitStream:
@@ -36,6 +37,7 @@ class BitStream:
 
 
 if __name__ == '__main__':
+
 
     bs = BitStream('teste.txt')
     ba = bs.read_n_bits(16)

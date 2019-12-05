@@ -26,24 +26,25 @@ class Golomb():
         size_resto=int(math.log2(self.m))
         resto_bi=''
         quociente=0
+        with open("output_golomb.txt", 'w') as f:
+            for l in self.code:
+                
+                if len(resto_bi) == size_resto:
+                    resto=int(resto_bi[::-1], 2)
 
-        for l in self.code:
-            
-            if len(resto_bi) == size_resto:
-                resto=int(resto_bi[::-1], 2)
+                    if l == 0:
+                        byte = self.m * quociente + resto
+                        f.write(chr(byte))
+                        resto_bi=''
+                        quociente=0
+                        
+                    else:
+                        quociente += 1
 
-                if l == 0:
-                    byte = self.m * quociente + resto
-                    
-                    resto_bi=''
-                    quociente=0
-                    
                 else:
-                    quociente += 1
+                    resto_bi=resto_bi+str(l)
 
-            else:
-                resto_bi=resto_bi+str(l)
-
+        
 
 if __name__ == '__main__':
     gol = Golomb(16, 'teste.txt')
