@@ -18,7 +18,6 @@ class BitStream:
             for i in range(0, 8):
                 if bits_read < n:
                     bit_to_store = (cur_byte & (1 << (7 - i)))
-                    print(bit_to_store)
                     if bit_to_store:
                         self.bit_array.append(1)
                     else:
@@ -30,32 +29,25 @@ class BitStream:
     def write_n_bits(self, filename, n):
         dest = open(filename, 'wb')
 
-        for i in range(n):
-            bit_to_write = self.bit_array[i]
+        nbytes = math.ceil(n / 8)
+        print(nbytes)
+        bits_written = 0
 
+        for i in range(nbytes):
+            counter = 0
+            built_byte = 0
+            while counter < 8:
+                bit_to_write = self.bit_array[bits_written]
+                built_byte = built_byte | (bit_to_write << (7 - counter))
+                counter += 1
+                bits_written += 1
 
-
-        pass
-
-    def read_file(self, filename):
-        file = open(filename, 'rb')
-        bit_count = 0
-        #fcontent = file.read().decode('latin1')
-        #self.bit_array = ''.join(format(ord(byte), '08b') for byte in str(fcontent))
-
-
-        file.close()
-
-    def write_bits_to_file(self, filename):
-        file = open(filename, 'wb')
-        num_bytes = math.ceil(len(self.bit_array) / 8)
-        '''
-        for i in range(0, num_bytes*8, 8):
-            print(int(self.bit_array[i:i+8], 2))
-            byte = int(self.bit_array[i:i+8], 2).to_bytes(1, byteorder='big', signed=True)
-            file.write(byte)
-        '''
-
-        bytes = int(self.bit_array, 2).to_bytes(num_bytes, byteorder='big', signed=True)
-
-        file.write(bytes)
+                if bits_written == n:
+                    print(built_byte)
+                    dest.write(built_byte.to_bytes(1, "little"))
+                    break
+            if bits_written == n:
+                break
+            else:
+                print(built_byte)
+                dest.write(built_byte.to_bytes(1, "little"))
