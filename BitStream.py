@@ -2,13 +2,13 @@
 import os
 
 class BitStream:
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self):
+        pass
 
-    def read_n_bits(self, no_bits):
+    def read_n_bits(self, filename):
         bit_array=[]
-        with open(self.filename, 'rb') as f:
-            for l in range(os.path.getsize(self.filename)):
+        with open(filename, 'rb') as f:
+            for l in range(os.path.getsize(filename)):
                 byte=ord(f.read(1))
                 
                 for i in range (8):
@@ -39,6 +39,6 @@ class BitStream:
 if __name__ == '__main__':
 
 
-    bs = BitStream('teste.txt')
-    ba = bs.read_n_bits(16)
+    bs = BitStream()
+    ba = bs.read_n_bits('teste.txt')
     bs.write_n_bits('output',ba)

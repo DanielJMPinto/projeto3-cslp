@@ -2,16 +2,15 @@ import os
 import math
 
 class Golomb():
-    def __init__(self, m, filename):
+    def __init__(self, m):
         self.m = m
-        self.filename = filename
         self.code = []
         
                 
-    def golomb_encode(self):
+    def golomb_encode(self, value):
         with open(self.filename, 'rb') as f:
             for l in range(os.path.getsize(self.filename)):
-                byte = ord(f.read(1))
+                byte = ord(value)
                 quot = byte // self.m
                 rest = byte % self.m
                 
@@ -43,11 +42,3 @@ class Golomb():
 
                 else:
                     resto_bi=resto_bi+str(l)
-
-        
-
-if __name__ == '__main__':
-    gol = Golomb(16, 'teste.txt')
-    
-    gol.golomb_encode()
-    gol.golomb_decode()
