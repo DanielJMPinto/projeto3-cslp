@@ -4,5 +4,5 @@
 # Utilizacao
 
 ```bash
-$ ./python3 videoplayer.py nome_do_video
+$ python3 videoplayer.py nome_do_video
 ```
